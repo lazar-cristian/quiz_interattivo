@@ -1,87 +1,132 @@
-/* Design Tokens (Skill: design-system) */
+/* ==========================================
+   DESIGN SYSTEM TOKENS (Skill: design-system)
+   Stile: Minimal Tech / Slate & Indigo
+   ========================================== */
 :root {
-    --background: #f8fafc;
-    --card-bg: #ffffff;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --success: #16a34a;
-    --error: #dc2626;
-    --border: #e2e8f0;
+    --bg-global: #f8fafc;        /* Sfondo pagina ultra-pulito */
+    --bg-card: #ffffff;          /* Sfondo del quiz puro */
+    --border-soft: #e2e8f0;      /* Bordi sottili e moderni */
+    --border-focus: #6366f1;     /* Bordo quando si seleziona un'opzione */
+    
+    /* Colori del Testo */
+    --text-main: #0f172a;        /* Slate scuro per massima leggibilità */
+    --text-muted: #64748b;       /* Grigio neutro per elementi secondari */
+    
+    /* Stati Interni */
+    --primary: #4f46e5;          /* Indigo moderno per i pulsanti */
+    --primary-hover: #4338ca;    
+    --success-bg: #f0fdf4;       /* Sfondo feedback positivo */
+    --success-text: #16a34a;
+    --error-bg: #fef2f2;         /* Sfondo feedback negativo */
+    --error-text: #dc2626;
 }
 
+/* ==========================================
+   LAYOUT GENERALE & TIPOGRAFIA
+   ========================================== */
 body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background-color: var(--background);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-global);
     color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* Contenitore Principale (Card Minimal) */
 .quiz-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 2.5rem;
     width: 100%;
-    max-width: 450px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    max-width: 480px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease;
 }
 
+/* Intestazione del Brand */
 .brand-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1rem;
+    gap: 14px;
+    margin-bottom: 2rem;
 }
 
 .logo-placeholder {
-    background: var(--primary);
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
     color: white;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 0.9rem;
     padding: 8px 12px;
-    border-radius: 8px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
 }
 
-h1 { font-size: 1.25rem; margin: 0; }
-h2 { font-size: 1.1rem; margin-bottom: 1.5rem; }
+h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin: 0;
+}
 
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-top: 0;
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.4px;
+}
+
+/* ==========================================
+   COMPONENTI UI (Skill: ui-styling)
+   ========================================== */
+
+/* Contenitore delle opzioni */
+.opzioni-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 1.75rem;
+}
+
+/* Trasformiamo le label in bottoni cliccabili e moderni */
 .opzioni-container label {
     display: flex;
     align-items: center;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.opzioni-container label:hover { background: var(--background); }
-.opzioni-container input { margin-right: 12px; }
-
-button {
-    width: 100%;
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 14px 16px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
-    margin-top: 1rem;
+    transition: all 0.2s ease;
 }
 
-button:hover { background: var(--primary-hover); }
+/* Effetto Hover sulle opzioni */
+.opzioni-container label:hover {
+    background-color: var(--bg-global);
+    border-color: #cbd5e1;
+}
 
-#feedback { margin-top: 1.5rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-.feedback-success { color: var(--success); }
-.feedback-error { color: var(--error); }
-#punteggio-container { margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted); text-align: right; }
+/* Quando l'opzione contiene il radio button selezionato */
+.opzioni-container label:has(input:checked) {
+    border-color: var(--border-focus);
+    background-color: #f5f3ff;
+    box-shadow: 0 0 0 1px var(--border-focus);
+}
+
+/* Personalizzazione del Radio Button nativo */
+.opzioni-container input[type="radio"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    margin-right: 1

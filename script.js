@@ -74,12 +74,11 @@ function fineQuiz() {
     btnAzione.style.display = "none";
     elDomanda.textContent = "Quiz Terminato!";
     
-    // Esempio esatto richiesto dalla consegna
     if (punteggio >= 4) {
-        elFeedback.innerHTML = `${iconaSuccesso} Ottimo lavoro! Sei un esperto nel tuo campo.`; [cite: 52-54]
+        elFeedback.innerHTML = `${iconaSuccesso} Ottimo lavoro! Sei un esperto nel tuo campo.`; 
         elFeedback.className = "feedback-success";
     } else {
-        elFeedback.innerHTML = `${iconaErrore} Devi ripassare un po'. Clicca <a href="#">link al materiale di studio</a> per ricominciare.`; [cite: 55-56]
+        elFeedback.innerHTML = `${iconaErrore} Devi ripassare un po'. Clicca <a href="#">link al materiale di studio</a> per ricominciare.`; 
         elFeedback.className = "feedback-error";
     }
 }

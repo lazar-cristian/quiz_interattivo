@@ -1,0 +1,87 @@
+/* Design Tokens (Skill: design-system) */
+:root {
+    --background: #f8fafc;
+    --card-bg: #ffffff;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --success: #16a34a;
+    --error: #dc2626;
+    --border: #e2e8f0;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--background);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.quiz-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.logo-placeholder {
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+h1 { font-size: 1.25rem; margin: 0; }
+h2 { font-size: 1.1rem; margin-bottom: 1.5rem; }
+
+.opzioni-container label {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.opzioni-container label:hover { background: var(--background); }
+.opzioni-container input { margin-right: 12px; }
+
+button {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+button:hover { background: var(--primary-hover); }
+
+#feedback { margin-top: 1.5rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+.feedback-success { color: var(--success); }
+.feedback-error { color: var(--error); }
+#punteggio-container { margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted); text-align: right; }

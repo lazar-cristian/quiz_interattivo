@@ -272,6 +272,7 @@ const btnAzione = document.getElementById("btn-azione");
 const elFeedback = document.getElementById("feedback");
 const elPunteggio = document.getElementById("punteggio");
 const progressBar = document.getElementById("progress-bar");
+const btnRestart = document.getElementById("btn-restart");
 
 /**
  * Aggiorna visivamente la larghezza della barra di progresso
@@ -390,8 +391,9 @@ function fineQuiz() {
     
     // Rimuoviamo le opzioni dal DOM
     elOpzioni.innerHTML = "";
-    // Nascondiamo il bottone principale
+    // Nascondiamo il bottone principale e mostriamo il bottone di restart
     btnAzione.style.display = "none";
+    btnRestart.style.display = "block";
     
     // Mostriamo un titolo conclusivo
     elDomanda.textContent = "Quiz Terminato!";
@@ -439,5 +441,38 @@ btnAzione.addEventListener("click", () => {
     }
 });
 
+/**
+ * Mischia l'ordine delle domande in modo casuale (Algoritmo di Fisher-Yates)
+ */
+function mischiaDomande() {
+    for (let i = domande.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        // Scambio degli elementi nell'array
+        [domande[i], domande[j]] = [domande[j], domande[i]];
+    }
+}
+
+// Listener sul bottone di riavvio
+btnRestart.addEventListener("click", () => {
+    playSound('click'); // Suono di interazione
+    
+    // Ripristiniamo i contatori
+    indiceDomanda = 0;
+    punteggio = 0;
+    elPunteggio.textContent = punteggio; // Aggiorniamo a schermo
+    
+    // Mischiamo le domande ad ogni nuovo riavvio
+    mischiaDomande();
+    
+    // Ripristiniamo i bottoni
+    btnRestart.style.display = "none";
+    btnAzione.style.display = "block";
+    
+    // Facciamo ripartire il quiz
+    mostraDomanda();
+});
+
+// Mischiamo le domande per la primissima partita
+mischiaDomande();
 // Boot dell'applicazione: mostriamo la prima domanda all'avvio dello script
 mostraDomanda();

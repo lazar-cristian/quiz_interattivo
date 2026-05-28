@@ -1,132 +1,349 @@
 /* ==========================================
-   DESIGN SYSTEM TOKENS (Skill: design-system)
-   Stile: Minimal Tech / Slate & Indigo
+   DESIGN SYSTEM TOKENS
+   Style: Apple-Inspired Glassmorphism
    ========================================== */
 :root {
-    --bg-global: #f8fafc;        /* Sfondo pagina ultra-pulito */
-    --bg-card: #ffffff;          /* Sfondo del quiz puro */
-    --border-soft: #e2e8f0;      /* Bordi sottili e moderni */
-    --border-focus: #6366f1;     /* Bordo quando si seleziona un'opzione */
+    --bg-global: #f0f2f5;
+    --bg-card: rgba(255, 255, 255, 0.65);
+    --border-soft: rgba(255, 255, 255, 0.4);
+    --border-focus: #007aff;
     
-    /* Colori del Testo */
-    --text-main: #0f172a;        /* Slate scuro per massima leggibilità */
-    --text-muted: #64748b;       /* Grigio neutro per elementi secondari */
+    --text-main: #1d1d1f;
+    --text-muted: #86868b;
     
-    /* Stati Interni */
-    --primary: #4f46e5;          /* Indigo moderno per i pulsanti */
-    --primary-hover: #4338ca;    
-    --success-bg: #f0fdf4;       /* Sfondo feedback positivo */
-    --success-text: #16a34a;
-    --error-bg: #fef2f2;         /* Sfondo feedback negativo */
-    --error-text: #dc2626;
+    --primary: #007aff;
+    --primary-hover: #0062cc;
+    --primary-gradient: linear-gradient(135deg, #007aff, #5856d6);
+    --primary-gradient-hover: linear-gradient(135deg, #0062cc, #4a48b8);
+    
+    --success-bg: rgba(52, 199, 89, 0.15);
+    --success-text: #28a745;
+    --error-bg: rgba(255, 59, 48, 0.15);
+    --error-text: #dc3545;
+
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+    --option-bg: rgba(255, 255, 255, 0.5);
+    --option-hover: rgba(255, 255, 255, 0.9);
 }
 
-/* ==========================================
-   LAYOUT GENERALE & TIPOGRAFIA
-   ========================================== */
+.dark-theme {
+    --bg-global: #000000;
+    --bg-card: rgba(28, 28, 30, 0.65);
+    --border-soft: rgba(255, 255, 255, 0.1);
+    --border-focus: #0a84ff;
+    
+    --text-main: #f5f5f7;
+    --text-muted: #a1a1a6;
+    
+    --primary: #0a84ff;
+    --primary-hover: #007aff;
+    --primary-gradient: linear-gradient(135deg, #0a84ff, #5e5ce6);
+    --primary-gradient-hover: linear-gradient(135deg, #007aff, #5856d6);
+
+    --success-bg: rgba(48, 209, 88, 0.15);
+    --success-text: #32d74b;
+    --error-bg: rgba(255, 69, 58, 0.15);
+    --error-text: #ff453a;
+
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0,0,0,0.2);
+    --option-bg: rgba(44, 44, 46, 0.5);
+    --option-hover: rgba(58, 58, 60, 0.9);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-global);
     color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
+    overflow: hidden; /* Prevent scrollbar due to canvas */
+    transition: background-color 0.4s ease, color 0.4s ease;
     -webkit-font-smoothing: antialiased;
 }
 
-/* Contenitore Principale (Card Minimal) */
-.quiz-card {
+/* ==========================================
+   INTERACTIVE CANVAS BACKGROUND
+   ========================================== */
+#physics-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: auto; /* Allow mouse interaction */
+}
+
+/* ==========================================
+   UI COMPONENTS
+   ========================================== */
+
+/* Theme Toggle */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
-    border-radius: 16px;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    color: var(--text-main);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.sun-icon { display: none; }
+.moon-icon { display: block; }
+.dark-theme .sun-icon { display: block; }
+.dark-theme .moon-icon { display: none; }
+
+/* Quiz Card Layout */
+.quiz-card {
+    position: relative;
+    z-index: 1; /* Above canvas */
+    background: var(--bg-card);
+    backdrop-filter: blur(25px) saturate(200%);
+    -webkit-backdrop-filter: blur(25px) saturate(200%);
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
     padding: 2.5rem;
     width: 100%;
     max-width: 480px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02), 
-                0 8px 10px -6px rgba(0, 0, 0, 0.02);
-    transition: transform 0.3s ease;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Intestazione del Brand */
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    height: 4px;
+    background: var(--border-soft);
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-gradient);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Brand Header */
 .brand-header {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
     margin-bottom: 2rem;
 }
 
 .logo-placeholder {
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    font-family: 'Outfit', sans-serif;
+    background: var(--primary-gradient);
     color: white;
     font-weight: 700;
-    font-size: 0.9rem;
-    padding: 8px 12px;
-    border-radius: 10px;
+    font-size: 1.1rem;
+    padding: 10px 14px;
+    border-radius: 12px;
     letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
 }
 
 h1 {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
     letter-spacing: -0.3px;
     margin: 0;
 }
 
 h2 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 600;
     line-height: 1.4;
     margin-top: 0;
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
     letter-spacing: -0.4px;
 }
 
-/* ==========================================
-   COMPONENTI UI (Skill: ui-styling)
-   ========================================== */
-
-/* Contenitore delle opzioni */
+/* Options Container */
 .opzioni-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 1.75rem;
+    gap: 14px;
+    margin-bottom: 2rem;
 }
 
-/* Trasformiamo le label in bottoni cliccabili e moderni */
+/* Modern Options */
 .opzioni-container label {
     display: flex;
     align-items: center;
-    padding: 14px 16px;
-    background-color: var(--bg-card);
+    padding: 16px 20px;
+    background: var(--option-bg);
     border: 1px solid var(--border-soft);
-    border-radius: 12px;
-    font-size: 0.95rem;
+    border-radius: 16px;
+    font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-/* Effetto Hover sulle opzioni */
 .opzioni-container label:hover {
-    background-color: var(--bg-global);
-    border-color: #cbd5e1;
+    background: var(--option-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
 }
 
-/* Quando l'opzione contiene il radio button selezionato */
+.opzioni-container label:active {
+    transform: scale(0.98);
+}
+
+/* Option Selected State */
 .opzioni-container label:has(input:checked) {
     border-color: var(--border-focus);
-    background-color: #f5f3ff;
-    box-shadow: 0 0 0 1px var(--border-focus);
+    background: var(--option-hover);
+    box-shadow: 0 0 0 2px var(--border-focus);
 }
 
-/* Personalizzazione del Radio Button nativo */
+/* Nascondiamo il Radio Button nativo via software come richiesto dalle specifiche */
 .opzioni-container input[type="radio"] {
-    appearance: none;
-    background-color: #fff;
-    margin: 0;
-    margin-right: 1
+    display: none;
+}
+
+/* Modern Apple-style Action Button */
+.btn-modern {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background: var(--primary-gradient);
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-modern::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.btn-modern:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 122, 255, 0.4);
+}
+
+.btn-modern:hover:not(.disabled):after {
+    opacity: 1;
+}
+
+.btn-modern:active:not(.disabled) {
+    transform: scale(0.97);
+    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+}
+
+.btn-modern.disabled {
+    background: var(--border-soft);
+    color: var(--text-muted);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Feedback & Score */
+#feedback {
+    margin-top: 1.5rem;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+#feedback.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animazioni di Feedback */
+@keyframes pop {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.feedback-success {
+    background: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid rgba(52, 199, 89, 0.3);
+}
+
+.feedback-success.show {
+    animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.feedback-error {
+    background: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.feedback-error.show {
+    animation: shake 0.4s ease forwards;
+}
+
+#punteggio-container {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}

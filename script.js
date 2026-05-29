@@ -6,12 +6,12 @@
 const domandeQuiz = [
     {
         domanda: "Chi ha vinto il Mondiale di calcio nel 2006?",
-        opzioni: ["Francia", "Italia", "Brasile", "Germania"],
+        opzioni: ["Francia", "Italia", "Brasile", "Marocco"],
         rispostaCorretta: 1 // L'indice della risposta corretta (0-based, quindi 1 è "Italia")
     },
     {
         domanda: "Quale squadra di club ha vinto più Champions League?",
-        opzioni: ["Milan", "Barcellona", "Real Madrid", "Bayern Monaco"],
+        opzioni: ["Milan", "Mappanese", "Real Madrid", "Bayern Monaco"],
         rispostaCorretta: 2 // 2 è "Real Madrid"
     },
     {
@@ -21,12 +21,12 @@ const domandeQuiz = [
     },
     {
         domanda: "Chi è soprannominato 'La Pulce'?",
-        opzioni: ["Cristiano Ronaldo", "Diego Maradona", "Pelé", "Lionel Messi"],
+        opzioni: ["Christian Cianni", "Umberto fadda", "Alessandro Valido", "Lionel Messi"],
         rispostaCorretta: 3 // 3 è "Lionel Messi"
     },
     {
         domanda: "In quale città si trova lo stadio Santiago Bernabéu?",
-        opzioni: ["Barcellona", "Madrid", "Siviglia", "Valencia"],
+        opzioni: ["Barcellona", "Madrid", "Siviglia", "Leinì"],
         rispostaCorretta: 1 // 1 è "Madrid"
     }
 ];

@@ -1,349 +1,56 @@
-/* ==========================================
-   DESIGN SYSTEM TOKENS
-   Style: Apple-Inspired Glassmorphism
-   ========================================== */
-:root {
-    --bg-global: #f0f2f5;
-    --bg-card: rgba(255, 255, 255, 0.65);
-    --border-soft: rgba(255, 255, 255, 0.4);
-    --border-focus: #007aff;
-    
-    --text-main: #1d1d1f;
-    --text-muted: #86868b;
-    
-    --primary: #007aff;
-    --primary-hover: #0062cc;
-    --primary-gradient: linear-gradient(135deg, #007aff, #5856d6);
-    --primary-gradient-hover: linear-gradient(135deg, #0062cc, #4a48b8);
-    
-    --success-bg: rgba(52, 199, 89, 0.15);
-    --success-text: #28a745;
-    --error-bg: rgba(255, 59, 48, 0.15);
-    --error-text: #dc3545;
-
-    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
-    --option-bg: rgba(255, 255, 255, 0.5);
-    --option-hover: rgba(255, 255, 255, 0.9);
-}
-
-.dark-theme {
-    --bg-global: #000000;
-    --bg-card: rgba(28, 28, 30, 0.65);
-    --border-soft: rgba(255, 255, 255, 0.1);
-    --border-focus: #0a84ff;
-    
-    --text-main: #f5f5f7;
-    --text-muted: #a1a1a6;
-    
-    --primary: #0a84ff;
-    --primary-hover: #007aff;
-    --primary-gradient: linear-gradient(135deg, #0a84ff, #5e5ce6);
-    --primary-gradient-hover: linear-gradient(135deg, #007aff, #5856d6);
-
-    --success-bg: rgba(48, 209, 88, 0.15);
-    --success-text: #32d74b;
-    --error-bg: rgba(255, 69, 58, 0.15);
-    --error-text: #ff453a;
-
-    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0,0,0,0.2);
-    --option-bg: rgba(44, 44, 46, 0.5);
-    --option-hover: rgba(58, 58, 60, 0.9);
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-global);
-    color: var(--text-main);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden; /* Prevent scrollbar due to canvas */
-    transition: background-color 0.4s ease, color 0.4s ease;
-    -webkit-font-smoothing: antialiased;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #eef2f3;
 }
 
-/* ==========================================
-   INTERACTIVE CANVAS BACKGROUND
-   ========================================== */
-#physics-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: auto; /* Allow mouse interaction */
-}
-
-/* ==========================================
-   UI COMPONENTS
-   ========================================== */
-
-/* Theme Toggle */
-.theme-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 10;
-    background: var(--bg-card);
-    border: 1px solid var(--border-soft);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    color: var(--text-main);
-    box-shadow: var(--card-shadow);
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.theme-toggle:hover {
-    transform: scale(1.05);
-}
-
-.theme-toggle:active {
-    transform: scale(0.95);
-}
-
-.sun-icon { display: none; }
-.moon-icon { display: block; }
-.dark-theme .sun-icon { display: block; }
-.dark-theme .moon-icon { display: none; }
-
-/* Quiz Card Layout */
-.quiz-card {
-    position: relative;
-    z-index: 1; /* Above canvas */
-    background: var(--bg-card);
-    backdrop-filter: blur(25px) saturate(200%);
-    -webkit-backdrop-filter: blur(25px) saturate(200%);
-    border: 1px solid var(--border-soft);
-    border-radius: 24px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: var(--card-shadow);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Progress Bar */
-.progress-container {
-    width: 100%;
-    height: 4px;
-    background: var(--border-soft);
-    border-radius: 2px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--primary-gradient);
-    border-radius: 2px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Brand Header */
-.brand-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 2rem;
-}
-
-.logo-placeholder {
-    font-family: 'Outfit', sans-serif;
-    background: var(--primary-gradient);
-    color: white;
-    font-weight: 700;
-    font-size: 1.1rem;
-    padding: 10px 14px;
-    border-radius: 12px;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+#quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    margin: 0;
-}
-
-h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin-top: 0;
-    margin-bottom: 2rem;
-    letter-spacing: -0.4px;
-}
-
-/* Options Container */
-.opzioni-container {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 2rem;
-}
-
-/* Modern Options */
-.opzioni-container label {
-    display: flex;
-    align-items: center;
-    padding: 16px 20px;
-    background: var(--option-bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 16px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.opzioni-container label:hover {
-    background: var(--option-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-}
-
-.opzioni-container label:active {
-    transform: scale(0.98);
-}
-
-/* Option Selected State */
-.opzioni-container label:has(input:checked) {
-    border-color: var(--border-focus);
-    background: var(--option-hover);
-    box-shadow: 0 0 0 2px var(--border-focus);
-}
-
-/* Nascondiamo il Radio Button nativo via software come richiesto dalle specifiche */
-.opzioni-container input[type="radio"] {
-    display: none;
-}
-
-/* Modern Apple-style Action Button */
-.btn-modern {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 16px;
-    background: var(--primary-gradient);
-    color: white;
-    font-size: 1.05rem;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-modern::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(rgba(255,255,255,0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.btn-modern:hover:not(.disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(0, 122, 255, 0.4);
-}
-
-.btn-modern:hover:not(.disabled):after {
-    opacity: 1;
-}
-
-.btn-modern:active:not(.disabled) {
-    transform: scale(0.97);
-    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
-}
-
-.btn-modern.disabled {
-    background: var(--border-soft);
-    color: var(--text-muted);
-    box-shadow: none;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Feedback & Score */
-#feedback {
-    margin-top: 1.5rem;
-    padding: 14px;
-    border-radius: 12px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-}
-
-#feedback.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Animazioni di Feedback */
-@keyframes pop {
-    0% { transform: scale(0.9); opacity: 0; }
-    50% { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
-}
-
-.feedback-success {
-    background: var(--success-bg);
-    color: var(--success-text);
-    border: 1px solid rgba(52, 199, 89, 0.3);
-}
-
-.feedback-success.show {
-    animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.feedback-error {
-    background: var(--error-bg);
-    color: var(--error-text);
-    border: 1px solid rgba(255, 59, 48, 0.3);
-}
-
-.feedback-error.show {
-    animation: shake 0.4s ease forwards;
-}
-
-#punteggio-container {
-    margin-top: 1.5rem;
     text-align: center;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text-muted);
+    color: #333;
+}
+
+.opzione {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#btn-controlla {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#btn-controlla:hover {
+    background-color: #0056b3;
+}
+
+#feedback {
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+#testo-punteggio {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
 }

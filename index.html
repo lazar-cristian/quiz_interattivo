@@ -3,48 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech & Web Design Quiz</title> 
-    <!-- Google Fonts for Apple-like typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Fase 2: Personalizzare il titolo della pagina -->
+    <title>Quiz sul Calcio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="light-theme">
-    <!-- Interactive Background Canvas -->
-    <canvas id="physics-canvas"></canvas>
-
-    <!-- Theme Toggle -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-    </button>
-
-    <main class="quiz-card">
-        <div class="progress-container">
-            <div id="progress-bar" class="progress-bar"></div>
+<body>
+    <!-- Struttura base del quiz (Fase 2) -->
+    <div id="quiz-container">
+        <h1>Quiz sul Calcio</h1>
+        
+        <!-- Contenitore della domanda -->
+        <h2 id="titolo-domanda">Domanda</h2>
+        
+        <!-- Contenitore delle opzioni (radio buttons) -->
+        <div id="opzioni">
+            <!-- Le opzioni verranno inserite qui da JavaScript -->
         </div>
+        
+        <!-- Pulsante per controllare la risposta -->
+        <button id="btn-controlla">Controlla Risposta</button>
+        
+        <!-- Messaggio di feedback (corretto/errato) -->
+        <p id="feedback"></p>
+        
+        <!-- Punteggio finale aggiornato -->
+        <p id="testo-punteggio">Punteggio: <span id="punteggio">0</span></p>
+    </div>
 
-        <div class="brand-header">
-            <div class="logo-placeholder">QZ</div>
-            <h1>Tech & Web Design</h1>
-        </div>
-
-        <div id="quiz-container">
-            <h2 id="domanda">Caricamento...</h2>
-            
-            <div id="opzioni" class="opzioni-container">
-                <!-- Options injected here via JS -->
-            </div>
-            
-            <button id="btn-azione" class="btn-modern disabled">Conferma Risposta</button>
-            <button id="btn-restart" class="btn-modern" style="display: none; margin-top: 1rem;">Ricomincia Quiz</button>
-            
-            <div id="feedback"></div>
-            <div id="punteggio-container">Punteggio: <span id="punteggio">0</span></div>
-        </div>
-    </main>
-
+    <!-- Collegamento al file JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
